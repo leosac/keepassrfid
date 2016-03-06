@@ -101,7 +101,7 @@
     <PreBuildEvent>xcopy $(SolutionDir)packages $(ProjectDir)packages /S /Y /I</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\KeePass Password Safe 2\KeePass.exe" --plgx-create F:\dev\keepassrfid\keepassrfid</PostBuildEvent>
+    <PostBuildEvent>"C:\Program Files (x86)\KeePass Password Safe 2\KeePass.exe" --plgx-prereq-net:3.5 --plgx-create $(SolutionDir)keepassrfid</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

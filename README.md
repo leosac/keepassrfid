@@ -5,7 +5,7 @@ KeePass 2.x RFID / NFC plugin to use your contactless card as a new key provider
  * PC/SC, LibNFC and more reader protocol support: **implemented**
  * Card Serial Number (CSN) as a key: **implemented**
  * Key storage on NFC Tag (Type 4 only): **implemented**
- * Secure ID (3-way authentication, SAM, HSM): [*contact us*](mailto:dev@islog.com?Subject=KeePass%20RFID%20-%20Secure%20ID)
+ * Secure ID (3-way authentication, SAM, HSM): *planned* [*contact us*](mailto:dev@islog.com?Subject=KeePass%20RFID%20-%20Secure%20ID)
  
 ## System Requirements
  * [KeePass 2.18](http://keepass.info) or higher
