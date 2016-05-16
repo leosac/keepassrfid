@@ -1,5 +1,7 @@
 ﻿using KeePassLib.Keys;
 using LibLogicalAccess;
+using LibLogicalAccess.Card;
+using LibLogicalAccess.Reader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,35 +25,38 @@ namespace KeePassRFID
             try
             {
                 KeePassRFIDConfig rfidConfig = KeePassRFIDConfig.GetFromCurrentSession();
-                ChipAction(new Action<IChip>(delegate (IChip chip)
+                ChipAction(new Action<Chip>(delegate (Chip chip)
                 {
                     if (rfidConfig.KeyType == KeyType.NFC)
                     {
                         // Only tag type 4 supported for now.
-                        IDESFireEV1NFCTag4CardService nfcsvc = chip.GetService(CardServiceType.CST_NFC_TAG) as IDESFireEV1NFCTag4CardService;
+                        NFCTagCardService nfcsvc = chip.getService(CardServiceType.CST_NFC_TAG) as NFCTagCardService;
                         if (nfcsvc == null)
                             throw new KeePassRFIDException(Properties.Resources.UnsupportedNFCTag);
 
-                        NdefMessage msg = nfcsvc.ReadNDEF();
-                        if (msg.GetRecordCount() > 0)
+                        NdefMessage msg = nfcsvc.readNDEF();
+                        if (msg.getRecordCount() > 0)
                         {
-                            object[] records = msg.Records as object[];
-                            if (records != null)
+                            NdefRecordCollection records = msg.getRecords();
+                            if (records.Count > 0)
                             {
                                 // Always use first record only
-                                INdefRecord record = records[0] as INdefRecord;
+                                NdefRecord record = records[0];
                                 // Don't care about payload type, use whole payload as the key
-                                key = record.Payload as byte[];
+                                UCharCollection payload = record.getPayload();
+                                if (payload.Count > 0)
+                                {
+                                    key = payload.ToArray();
+                                }
                             }
                         }
                     }
                     else
                     {
-                        string csn = chip.ChipIdentifier;
-                        if (!String.IsNullOrEmpty(csn))
+                        UCharCollection csn = chip.getChipIdentifier();
+                        if (csn.Count > 0)
                         {
-                            key = new byte[csn.Length * sizeof(char)];
-                            System.Buffer.BlockCopy(csn.ToCharArray(), 0, key, 0, key.Length);
+                            key = csn.ToArray();
                         }
                     }
                 }), rfidConfig);
@@ -64,17 +69,17 @@ namespace KeePassRFID
             return key;
         }
 
-        public static void ChipAction(Action<IChip> action, KeePassRFIDConfig rfidConfig)
+        public static void ChipAction(Action<Chip> action, KeePassRFIDConfig rfidConfig)
         {
             if (rfidConfig == null)
                 rfidConfig = KeePassRFIDConfig.GetFromCurrentSession();
 
-            IReaderProvider readerProvider;
+            ReaderProvider readerProvider;
             try
             {
-                ILibraryManager libmgt = new LibraryManager();
+                LibraryManager libmgt = LibraryManager.getInstance();
 
-                readerProvider = libmgt.GetReaderProvider(!String.IsNullOrEmpty(rfidConfig.ReaderProvider) ? rfidConfig.ReaderProvider : "PCSC");
+                readerProvider = libmgt.getReaderProvider(!String.IsNullOrEmpty(rfidConfig.ReaderProvider) ? rfidConfig.ReaderProvider : "PCSC");
                 if (readerProvider == null)
                     throw new KeePassRFIDException(Properties.Resources.RFIDConfigurationError);
             }
@@ -83,19 +88,19 @@ namespace KeePassRFID
                 throw new KeePassRFIDException(Properties.Resources.RFIDInitError, ex);
             }
 
-            IReaderUnit readerUnit = null;
+            ReaderUnit readerUnit = null;
             if (String.IsNullOrEmpty(rfidConfig.ReaderUnit))
             {
-                readerUnit = readerProvider.CreateReaderUnit();
+                readerUnit = readerProvider.createReaderUnit();
                 if (readerUnit == null)
                     throw new KeePassRFIDException(Properties.Resources.RFIDReaderInitError);
             }
             else
             {
-                object[] readers = readerProvider.GetReaderList() as object[];
-                foreach (IReaderUnit reader in readers)
+                ReaderUnitCollection readers = readerProvider.getReaderList();
+                foreach (ReaderUnit reader in readers)
                 {
-                    if (reader.name == rfidConfig.ReaderUnit)
+                    if (reader.getName() == rfidConfig.ReaderUnit)
                     {
                         readerUnit = reader;
                         break;
@@ -108,14 +113,14 @@ namespace KeePassRFID
 
             try
             {
-                if (readerUnit.ConnectToReader())
+                if (readerUnit.connectToReader())
                 {
                     // Don't wait for chip insertion, it must already be on the reader
-                    if (readerUnit.WaitInsertion(1))
+                    if (readerUnit.waitInsertion(1))
                     {
-                        if (readerUnit.Connect())
+                        if (readerUnit.connect())
                         {
-                            IChip chip = readerUnit.GetSingleChip();
+                            Chip chip = readerUnit.getSingleChip();
                             if (chip != null)
                             {
                                 action(chip);
@@ -125,20 +130,20 @@ namespace KeePassRFID
                                 ShowError(Properties.Resources.NoChipError);
                             }
 
-                            readerUnit.Disconnect();
+                            readerUnit.disconnect();
                         }
                         else
                         {
                             ShowError(Properties.Resources.CardConnectionFailed);
                         }
-                        readerUnit.WaitRemoval(1);
+                        readerUnit.waitRemoval(1);
                     }
                     else
                     {
                         ShowError(Properties.Resources.NoCardInserted);
                     }
 
-                    readerUnit.DisconnectFromReader();
+                    readerUnit.disconnectFromReader();
                 }
                 else
                 {

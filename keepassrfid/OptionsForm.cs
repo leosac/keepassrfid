@@ -1,4 +1,6 @@
 ﻿using LibLogicalAccess;
+using LibLogicalAccess.Card;
+using LibLogicalAccess.Reader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -52,8 +54,8 @@ namespace KeePassRFID
         {
             cbReaderProvider.Items.Clear();
 
-            ILibraryManager libmgt = new LibraryManager();
-            object[] providers = libmgt.GetAvailableReaders() as object[];
+            LibraryManager libmgt = LibraryManager.getInstance();
+            StringCollection providers = libmgt.getAvailableReaders();
             foreach (string provider in providers)
             {
                 cbReaderProvider.Items.Add(provider);
@@ -67,14 +69,14 @@ namespace KeePassRFID
             if (cbReaderProvider.SelectedIndex > -1)
             {
                 string provider = cbReaderProvider.SelectedItem.ToString();
-                ILibraryManager libmgt = new LibraryManager();
-                IReaderProvider readerProvider = libmgt.GetReaderProvider(provider);
+                LibraryManager libmgt = LibraryManager.getInstance();
+                ReaderProvider readerProvider = libmgt.getReaderProvider(provider);
                 if (readerProvider != null)
                 {
-                    object[] readers = readerProvider.GetReaderList() as object[];
-                    foreach (IReaderUnit reader in readers)
+                    ReaderUnitCollection readers = readerProvider.getReaderList();
+                    foreach (ReaderUnit reader in readers)
                     {
-                        cbReaderUnit.Items.Add(reader.name);
+                        cbReaderUnit.Items.Add(reader.getName());
                     }
                 }
             }
@@ -92,22 +94,22 @@ namespace KeePassRFID
             {
                 try
                 {
-                    RFIDKeyProvider.ChipAction(new Action<IChip>(delegate (IChip chip)
+                    RFIDKeyProvider.ChipAction(new Action<Chip>(delegate (Chip chip)
                     {
                         // Only tag type 4 supported for now.
-                        IDESFireEV1NFCTag4CardService nfcsvc = chip.GetService(CardServiceType.CST_NFC_TAG) as IDESFireEV1NFCTag4CardService;
+                        NFCTagCardService nfcsvc = chip.getService(CardServiceType.CST_NFC_TAG) as NFCTagCardService;
                         if (nfcsvc == null)
                             throw new KeePassRFIDException(Properties.Resources.UnsupportedNFCTag);
                         
                         NdefMessage msg = new NdefMessage();
-                        msg.AddTextRecord(pwdForm.Password);
+                        msg.addTextRecord(pwdForm.Password);
 
-                        IStorageCardService storage = chip.GetService(CardServiceType.CST_STORAGE) as IStorageCardService;
+                        StorageCardService storage = chip.getService(CardServiceType.CST_STORAGE) as StorageCardService;
                         if (storage != null)
                         {
-                            storage.Erase();
+                            storage.erase();
                         }
-                        nfcsvc.WriteNDEF(msg);
+                        nfcsvc.writeNDEF(msg);
                     }), GetConfiguration());
 
                     MessageBox.Show(Properties.Resources.NFCTagWritten, Properties.Resources.Information, MessageBoxButtons.OK, MessageBoxIcon.Information);

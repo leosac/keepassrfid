@@ -33,13 +33,13 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Interop.LibLogicalAccess.Com">
-      <HintPath>packages\liblogicalaccess.com.1.81.0.131\lib\Interop.LibLogicalAccess.Com.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="KeePass">
       <HintPath>C:\Program Files (x86)\KeePass Password Safe 2\KeePass.exe</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="LibLogicalAccessNET, Version=1.83.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\LibLogicalAccessNET.1.83.0-pre01\lib\net20\LibLogicalAccessNET.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
