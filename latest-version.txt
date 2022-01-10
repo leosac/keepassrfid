@@ -1,3 +1,3 @@
 :
-KeePassRFID:1
+KeePassRFID:2
 :

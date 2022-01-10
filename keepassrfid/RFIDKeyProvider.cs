@@ -43,7 +43,7 @@ namespace KeePassRFID
                                 // Always use first record only
                                 NdefRecord record = records[0];
                                 // Don't care about payload type, use whole payload as the key
-                                UCharCollection payload = record.getPayload();
+                                var payload = record.getPayload();
                                 if (payload.Count > 0)
                                 {
                                     key = payload.ToArray();
@@ -53,7 +53,7 @@ namespace KeePassRFID
                     }
                     else
                     {
-                        UCharCollection csn = chip.getChipIdentifier();
+                        var csn = chip.getChipIdentifier();
                         if (csn.Count > 0)
                         {
                             key = csn.ToArray();
@@ -97,7 +97,7 @@ namespace KeePassRFID
             }
             else
             {
-                ReaderUnitCollection readers = readerProvider.getReaderList();
+                var readers = readerProvider.getReaderList();
                 foreach (ReaderUnit reader in readers)
                 {
                     if (reader.getName() == rfidConfig.ReaderUnit)

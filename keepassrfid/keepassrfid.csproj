@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KeePassRFID</RootNamespace>
     <AssemblyName>KeePassRFID</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -34,13 +34,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="KeePass">
-      <HintPath>C:\Program Files (x86)\KeePass Password Safe 2\KeePass.exe</HintPath>
+      <HintPath>C:\Program Files\KeePass Password Safe 2\KeePass.exe</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="LibLogicalAccessNET, Version=1.83.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\LibLogicalAccessNET.1.83.0-pre01\lib\net20\LibLogicalAccessNET.dll</HintPath>
+    <Reference Include="LibLogicalAccessNet, Version=2.4.0.0, Culture=neutral, PublicKeyToken=7a82f2d3e51d7690, processorArchitecture=MSIL">
+      <HintPath>..\packages\LibLogicalAccessNet.2.4.0-RC1\lib\netstandard2.0\LibLogicalAccessNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -76,7 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Properties\packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\liblogicalaccess_logo_x32.png" />
@@ -98,10 +98,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>xcopy $(SolutionDir)packages $(ProjectDir)packages /S /Y /I</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\KeePass Password Safe 2\KeePass.exe" --plgx-prereq-net:3.5 --plgx-create $(SolutionDir)keepassrfid</PostBuildEvent>
+    <PostBuildEvent>"C:\Program Files\KeePass Password Safe 2\KeePass.exe" --plgx-prereq-net:4.7.2 --plgx-create $(SolutionDir)keepassrfid</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -73,7 +73,7 @@ namespace KeePassRFID
                 ReaderProvider readerProvider = libmgt.getReaderProvider(provider);
                 if (readerProvider != null)
                 {
-                    ReaderUnitCollection readers = readerProvider.getReaderList();
+                    var readers = readerProvider.getReaderList();
                     foreach (ReaderUnit reader in readers)
                     {
                         cbReaderUnit.Items.Add(reader.getName());
@@ -102,12 +102,12 @@ namespace KeePassRFID
                             throw new KeePassRFIDException(Properties.Resources.UnsupportedNFCTag);
                         
                         NdefMessage msg = new NdefMessage();
-                        msg.addTextRecord(pwdForm.Password);
+                        msg.addTextRecord(pwdForm.Password, "en");
 
                         StorageCardService storage = chip.getService(CardServiceType.CST_STORAGE) as StorageCardService;
                         if (storage != null)
                         {
-                            storage.erase();
+                            storage.erase(null, null);
                         }
                         nfcsvc.writeNDEF(msg);
                     }), GetConfiguration());
