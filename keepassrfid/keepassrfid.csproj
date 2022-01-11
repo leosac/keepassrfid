@@ -38,10 +38,12 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="LibLogicalAccessNet, Version=2.4.0.0, Culture=neutral, PublicKeyToken=7a82f2d3e51d7690, processorArchitecture=MSIL">
-      <HintPath>..\packages\LibLogicalAccessNet.2.4.0-RC1\lib\netstandard2.0\LibLogicalAccessNet.dll</HintPath>
+      <HintPath>packages\LibLogicalAccessNet.2.4.0-RC1\lib\netstandard2.0\LibLogicalAccessNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
+    <Reference Include="netstandard">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -98,8 +100,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>xcopy $(SolutionDir)packages $(ProjectDir)packages /S /Y /I</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>"C:\Program Files\KeePass Password Safe 2\KeePass.exe" --plgx-prereq-net:4.7.2 --plgx-create $(SolutionDir)keepassrfid</PostBuildEvent>
