@@ -15,7 +15,7 @@ namespace KeePassRFID
     {
         public override string Name
         {
-            get { return "ISLOG RFID/NFC Key Provider"; }
+            get { return "RFID/NFC Key Provider"; }
         }
 
         public override byte[] GetKey(KeyProviderQueryContext ctx)
@@ -83,7 +83,7 @@ namespace KeePassRFID
                 if (readerProvider == null)
                     throw new KeePassRFIDException(Properties.Resources.RFIDConfigurationError);
             }
-            catch (COMException ex)
+            catch (LibLogicalAccessException ex)
             {
                 throw new KeePassRFIDException(Properties.Resources.RFIDInitError, ex);
             }
@@ -115,6 +115,12 @@ namespace KeePassRFID
             {
                 if (readerUnit.connectToReader())
                 {
+                    // Optionally force card type
+                    if (!string.IsNullOrEmpty(rfidConfig.CardType))
+                    {
+                        readerUnit.setCardType(rfidConfig.CardType);
+                    }
+
                     // Don't wait for chip insertion, it must already be on the reader
                     if (readerUnit.waitInsertion(1))
                     {
@@ -150,7 +156,7 @@ namespace KeePassRFID
                     ShowError(Properties.Resources.ReaderConnectionFailed);
                 }
             }
-            catch (COMException ex)
+            catch (LibLogicalAccessException ex)
             {
                 ShowError(ex.Message);
             }

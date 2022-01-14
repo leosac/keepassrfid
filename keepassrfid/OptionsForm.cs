@@ -36,6 +36,7 @@ namespace KeePassRFID
             try
             {
                 RefreshReaderProviders();
+                RefreshCardTypes();
                 SetConfiguration(KeePassRFIDConfig.GetFromCurrentSession());
             }
             catch (COMException)
@@ -82,6 +83,18 @@ namespace KeePassRFID
             }
         }
 
+        private void RefreshCardTypes()
+        {
+            cbCardType.Items.Clear();
+
+            LibraryManager libmgt = LibraryManager.getInstance();
+            StringCollection cardtypes = libmgt.getAvailableCards();
+            foreach (string cardtype in cardtypes)
+            {
+                cbCardType.Items.Add(cardtype);
+            }
+        }
+
         private void rbtnNFC_CheckedChanged(object sender, EventArgs e)
         {
             linkWriteNFC.Enabled = rbtnNFC.Checked;
@@ -96,7 +109,6 @@ namespace KeePassRFID
                 {
                     RFIDKeyProvider.ChipAction(new Action<Chip>(delegate (Chip chip)
                     {
-                        // Only tag type 4 supported for now.
                         NFCTagCardService nfcsvc = chip.getService(CardServiceType.CST_NFC_TAG) as NFCTagCardService;
                         if (nfcsvc == null)
                             throw new KeePassRFIDException(Properties.Resources.UnsupportedNFCTag);
@@ -104,11 +116,19 @@ namespace KeePassRFID
                         NdefMessage msg = new NdefMessage();
                         msg.addTextRecord(pwdForm.Password, "en");
 
-                        StorageCardService storage = chip.getService(CardServiceType.CST_STORAGE) as StorageCardService;
-                        if (storage != null)
+                        // Special case until new LLA SWIG version get released
+                        if (nfcsvc is DESFireEV1NFCTag4CardService)
                         {
-                            storage.erase(null, null);
+                            var storagesvc = chip.getService(CardServiceType.CST_STORAGE) as DESFireStorageCardService;
+                            if (storagesvc == null)
+                                throw new KeePassRFIDException(Properties.Resources.UnsupportedNFCTag);
+                            storagesvc.erase();
                         }
+                        else
+                        {
+                            nfcsvc.eraseNDEF();
+                        }
+
                         nfcsvc.writeNDEF(msg);
                     }), GetConfiguration());
 
@@ -132,6 +152,7 @@ namespace KeePassRFID
             KeePassRFIDConfig config = new KeePassRFIDConfig();
             config.ReaderProvider = (cbReaderProvider.SelectedIndex > -1) ? cbReaderProvider.SelectedItem.ToString() : String.Empty;
             config.ReaderUnit = (cbReaderUnit.SelectedIndex > -1) ? cbReaderUnit.SelectedItem.ToString() : String.Empty;
+            config.CardType = (cbCardType.SelectedIndex > -1) ? cbCardType.SelectedItem.ToString() : String.Empty;
             config.KeyType = rbtnNFC.Checked ? KeyType.NFC : KeyType.CSN;
             return config;
         }
@@ -140,6 +161,7 @@ namespace KeePassRFID
         {
             cbReaderProvider.SelectedItem = config.ReaderProvider;
             cbReaderUnit.SelectedItem = config.ReaderUnit;
+            cbCardType.SelectedItem = config.CardType;
             switch (config.KeyType)
             {
                 case KeyType.NFC:
@@ -153,7 +175,7 @@ namespace KeePassRFID
 
         private void lblSecureID_Click(object sender, EventArgs e)
         {
-            Process.Start("mailto:dev@islog.com?Subject=KeePass%20RFID%20-%20Secure%20ID");
+            Process.Start("https://github.com/islog/keepassrfid/issues/5");
         }
     }
 }

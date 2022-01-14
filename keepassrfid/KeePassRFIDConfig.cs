@@ -21,12 +21,15 @@ namespace KeePassRFID
         {
             ReaderProvider = "PCSC";
             ReaderUnit = String.Empty;
+            CardType = String.Empty;
             KeyType = KeyType.CSN;
         }
 
         public string ReaderProvider { get; set; }
 
         public string ReaderUnit { get; set; }
+
+        public string CardType { get; set; }
 
         public KeyType KeyType { get; set; }
 

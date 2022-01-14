@@ -48,6 +48,9 @@
             this.cbReaderProvider = new System.Windows.Forms.ComboBox();
             this.lblReaderProvider = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.cbCardType = new System.Windows.Forms.ComboBox();
+            this.lblCardType = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.panelBottom.SuspendLayout();
             this.panelLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgLogo)).BeginInit();
@@ -63,14 +66,14 @@
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelBottom.Location = new System.Drawing.Point(142, 304);
             this.panelBottom.Name = "panelBottom";
-            this.panelBottom.Size = new System.Drawing.Size(319, 30);
+            this.panelBottom.Size = new System.Drawing.Size(336, 30);
             this.panelBottom.TabIndex = 0;
             // 
             // btnCancel
             // 
             this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(161, 2);
+            this.btnCancel.Location = new System.Drawing.Point(170, 2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
@@ -80,7 +83,7 @@
             // btnSave
             // 
             this.btnSave.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnSave.Location = new System.Drawing.Point(80, 2);
+            this.btnSave.Location = new System.Drawing.Point(89, 2);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 1;
@@ -134,9 +137,9 @@
             this.gpKeyType.Controls.Add(this.rbtnNFC);
             this.gpKeyType.Controls.Add(this.rbtnCSN);
             this.gpKeyType.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gpKeyType.Location = new System.Drawing.Point(142, 75);
+            this.gpKeyType.Location = new System.Drawing.Point(142, 105);
             this.gpKeyType.Name = "gpKeyType";
-            this.gpKeyType.Size = new System.Drawing.Size(319, 229);
+            this.gpKeyType.Size = new System.Drawing.Size(336, 199);
             this.gpKeyType.TabIndex = 2;
             this.gpKeyType.TabStop = false;
             this.gpKeyType.Text = "Key Type";
@@ -203,6 +206,9 @@
             // 
             // gpReaderConfig
             // 
+            this.gpReaderConfig.Controls.Add(this.label2);
+            this.gpReaderConfig.Controls.Add(this.cbCardType);
+            this.gpReaderConfig.Controls.Add(this.lblCardType);
             this.gpReaderConfig.Controls.Add(this.linkRefreshRU);
             this.gpReaderConfig.Controls.Add(this.cbReaderUnit);
             this.gpReaderConfig.Controls.Add(this.lblReaderUnit);
@@ -211,7 +217,7 @@
             this.gpReaderConfig.Dock = System.Windows.Forms.DockStyle.Top;
             this.gpReaderConfig.Location = new System.Drawing.Point(142, 0);
             this.gpReaderConfig.Name = "gpReaderConfig";
-            this.gpReaderConfig.Size = new System.Drawing.Size(319, 75);
+            this.gpReaderConfig.Size = new System.Drawing.Size(336, 105);
             this.gpReaderConfig.TabIndex = 3;
             this.gpReaderConfig.TabStop = false;
             this.gpReaderConfig.Text = "Reader Configuration";
@@ -267,13 +273,40 @@
             this.lblReaderProvider.TabIndex = 0;
             this.lblReaderProvider.Text = "Reader Provider:";
             // 
+            // cbCardType
+            // 
+            this.cbCardType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCardType.FormattingEnabled = true;
+            this.cbCardType.Location = new System.Drawing.Point(99, 73);
+            this.cbCardType.Name = "cbCardType";
+            this.cbCardType.Size = new System.Drawing.Size(154, 21);
+            this.cbCardType.TabIndex = 6;
+            // 
+            // lblCardType
+            // 
+            this.lblCardType.AutoSize = true;
+            this.lblCardType.Location = new System.Drawing.Point(6, 76);
+            this.lblCardType.Name = "lblCardType";
+            this.lblCardType.Size = new System.Drawing.Size(89, 13);
+            this.lblCardType.TabIndex = 5;
+            this.lblCardType.Text = "Force Card Type:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(259, 76);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(52, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "(Optional)";
+            // 
             // OptionsForm
             // 
             this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(461, 334);
+            this.ClientSize = new System.Drawing.Size(478, 334);
             this.Controls.Add(this.gpKeyType);
             this.Controls.Add(this.gpReaderConfig);
             this.Controls.Add(this.panelBottom);
@@ -316,5 +349,8 @@
         private System.Windows.Forms.LinkLabel linkWriteNFC;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Label lblSecureID;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cbCardType;
+        private System.Windows.Forms.Label lblCardType;
     }
 }

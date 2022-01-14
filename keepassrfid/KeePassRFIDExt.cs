@@ -1,6 +1,7 @@
 ﻿using KeePass.Plugins;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -44,6 +45,14 @@ namespace KeePassRFID
             get
             {
                 return "https://raw.githubusercontent.com/islog/keepassrfid/master/latest-version.txt";
+            }
+        }
+
+        public override Image SmallIcon
+        {
+            get
+            {
+                return Properties.Resources.liblogicalaccess_logo_x32;
             }
         }
 
