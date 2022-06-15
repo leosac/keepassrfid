@@ -153,7 +153,33 @@ namespace KeePassRFID
             config.ReaderProvider = (cbReaderProvider.SelectedIndex > -1) ? cbReaderProvider.SelectedItem.ToString() : String.Empty;
             config.ReaderUnit = (cbReaderUnit.SelectedIndex > -1) ? cbReaderUnit.SelectedItem.ToString() : String.Empty;
             config.CardType = (cbCardType.SelectedIndex > -1) ? cbCardType.SelectedItem.ToString() : String.Empty;
-            config.KeyType = rbtnNFC.Checked ? KeyType.NFC : KeyType.CSN;
+            if (rbtnNFC.Checked)
+            {
+                config.KeyType = KeyType.NFC;
+            }
+            else if (rbtnSecureID.Checked)
+            {
+                config.KeyType = KeyType.SecureID;
+            }
+            else if (rbtnOTP.Checked)
+            {
+                config.KeyType = KeyType.OTP;
+            }
+            else
+            {
+                config.KeyType = KeyType.CSN;
+            }
+            if (rbtnChallengeBlank.Checked || String.IsNullOrEmpty(tbxChallenge.Text))
+            {
+                config.Challenge = null;
+            }
+            else
+            {
+                byte[] challenge = new byte[tbxChallenge.Text.Length / 2];
+                for (int i = 0; i < tbxChallenge.Text.Length; i += 2)
+                    challenge[i / 2] = Convert.ToByte(tbxChallenge.Text.Substring(i, 2), 16);
+                config.Challenge = challenge;
+            }
             return config;
         }
 
@@ -167,15 +193,49 @@ namespace KeePassRFID
                 case KeyType.NFC:
                     rbtnNFC.Checked = true;
                     break;
+                case KeyType.SecureID:
+                    rbtnSecureID.Checked = true;
+                    break;
+                case KeyType.OTP:
+                    rbtnOTP.Checked = true;
+                    break;
                 default:
                     rbtnCSN.Checked = true;
                     break;
             }
+            rbtnChallengeBlank.Checked = (config.Challenge == null);
+            tbxChallenge.Text = config.Challenge == null ? String.Empty : BitConverter.ToString(config.Challenge).Replace("-", String.Empty);
         }
 
         private void lblSecureID_Click(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/islog/keepassrfid/issues/5");
+            Process.Start("https://github.com/leosac/keepassrfid/issues/5");
+        }
+
+        private void rbtnOTP_CheckedChanged(object sender, EventArgs e)
+        {
+            gpChallengeStrategy.Enabled = rbtnOTP.Checked;
+        }
+
+        private void linkQueryChallenge_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            RFIDKeyProvider.ChipAction(new Action<Chip>(delegate (Chip chip)
+            {
+                var otpsvc = chip.getService(CardServiceType.CST_CHALLENGE_RESPONSE) as ChallengeCardService;
+                if (otpsvc == null)
+                    throw new KeePassRFIDException(Properties.Resources.OTPUnsupported);
+
+                var challenge = otpsvc.getChallenge();
+                if (challenge != null && challenge.Count > 0)
+                {
+                    tbxChallenge.Text = BitConverter.ToString(challenge.ToArray()).Replace("-", String.Empty);
+                }
+            }), GetConfiguration());
+        }
+
+        private void rbtnChallengeFixed_CheckedChanged(object sender, EventArgs e)
+        {
+            linkQueryChallenge.Enabled = tbxChallenge.Enabled = rbtnChallengeFixed.Checked;
         }
     }
 }

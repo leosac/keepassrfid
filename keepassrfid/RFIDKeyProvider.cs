@@ -30,7 +30,7 @@ namespace KeePassRFID
                     if (rfidConfig.KeyType == KeyType.NFC)
                     {
                         // Only tag type 4 supported for now.
-                        NFCTagCardService nfcsvc = chip.getService(CardServiceType.CST_NFC_TAG) as NFCTagCardService;
+                        var nfcsvc = chip.getService(CardServiceType.CST_NFC_TAG) as NFCTagCardService;
                         if (nfcsvc == null)
                             throw new KeePassRFIDException(Properties.Resources.UnsupportedNFCTag);
 
@@ -49,6 +49,27 @@ namespace KeePassRFID
                                     key = payload.ToArray();
                                 }
                             }
+                        }
+                    }
+                    else if (rfidConfig.KeyType == KeyType.OTP)
+                    {
+                        var otpsvc = chip.getService(CardServiceType.CST_CHALLENGE_RESPONSE) as ChallengeCardService;
+                        if (otpsvc == null)
+                            throw new KeePassRFIDException(Properties.Resources.OTPUnsupported);
+
+                        ByteVector challenge;
+                        if (rfidConfig.Challenge == null)
+                        {
+                            challenge = otpsvc.getChallenge();
+                        }
+                        else
+                        {
+                            challenge = new ByteVector(rfidConfig.Challenge);
+                        }
+                        var response = otpsvc.getResponse(challenge);
+                        if (response != null && response.Count > 0)
+                        {
+                            key = response.ToArray();
                         }
                     }
                     else

@@ -44,7 +44,7 @@ namespace KeePassRFID
         {
             get
             {
-                return "https://raw.githubusercontent.com/islog/keepassrfid/master/latest-version.txt";
+                return "https://raw.githubusercontent.com/leosac/keepassrfid/master/latest-version.txt";
             }
         }
 

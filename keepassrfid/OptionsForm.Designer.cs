@@ -33,29 +33,33 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.panelLeft = new System.Windows.Forms.Panel();
-            this.imgLogo = new System.Windows.Forms.PictureBox();
             this.lblProductName = new System.Windows.Forms.Label();
             this.gpKeyType = new System.Windows.Forms.GroupBox();
-            this.lblSecureID = new System.Windows.Forms.Label();
+            this.rbtnOTP = new System.Windows.Forms.RadioButton();
             this.linkWriteNFC = new System.Windows.Forms.LinkLabel();
             this.rbtnSecureID = new System.Windows.Forms.RadioButton();
             this.rbtnNFC = new System.Windows.Forms.RadioButton();
             this.rbtnCSN = new System.Windows.Forms.RadioButton();
             this.gpReaderConfig = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbCardType = new System.Windows.Forms.ComboBox();
+            this.lblCardType = new System.Windows.Forms.Label();
             this.linkRefreshRU = new System.Windows.Forms.LinkLabel();
             this.cbReaderUnit = new System.Windows.Forms.ComboBox();
             this.lblReaderUnit = new System.Windows.Forms.Label();
             this.cbReaderProvider = new System.Windows.Forms.ComboBox();
             this.lblReaderProvider = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.cbCardType = new System.Windows.Forms.ComboBox();
-            this.lblCardType = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.gpChallengeStrategy = new System.Windows.Forms.GroupBox();
+            this.rbtnChallengeBlank = new System.Windows.Forms.RadioButton();
+            this.rbtnChallengeFixed = new System.Windows.Forms.RadioButton();
+            this.tbxChallenge = new System.Windows.Forms.TextBox();
+            this.linkQueryChallenge = new System.Windows.Forms.LinkLabel();
             this.panelBottom.SuspendLayout();
             this.panelLeft.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.imgLogo)).BeginInit();
             this.gpKeyType.SuspendLayout();
             this.gpReaderConfig.SuspendLayout();
+            this.gpChallengeStrategy.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelBottom
@@ -64,16 +68,16 @@
             this.panelBottom.Controls.Add(this.btnCancel);
             this.panelBottom.Controls.Add(this.btnSave);
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottom.Location = new System.Drawing.Point(142, 304);
+            this.panelBottom.Location = new System.Drawing.Point(142, 392);
             this.panelBottom.Name = "panelBottom";
-            this.panelBottom.Size = new System.Drawing.Size(336, 30);
+            this.panelBottom.Size = new System.Drawing.Size(434, 30);
             this.panelBottom.TabIndex = 0;
             // 
             // btnCancel
             // 
             this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(170, 2);
+            this.btnCancel.Location = new System.Drawing.Point(219, 2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
@@ -83,7 +87,7 @@
             // btnSave
             // 
             this.btnSave.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnSave.Location = new System.Drawing.Point(89, 2);
+            this.btnSave.Location = new System.Drawing.Point(138, 2);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 1;
@@ -95,27 +99,12 @@
             // 
             this.panelLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panelLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelLeft.Controls.Add(this.imgLogo);
             this.panelLeft.Controls.Add(this.lblProductName);
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeft.Location = new System.Drawing.Point(0, 0);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(142, 334);
+            this.panelLeft.Size = new System.Drawing.Size(142, 422);
             this.panelLeft.TabIndex = 1;
-            // 
-            // imgLogo
-            // 
-            this.imgLogo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.imgLogo.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.imgLogo.Image = global::KeePassRFID.Properties.Resources.logo;
-            this.imgLogo.Location = new System.Drawing.Point(0, 241);
-            this.imgLogo.Name = "imgLogo";
-            this.imgLogo.Size = new System.Drawing.Size(140, 91);
-            this.imgLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.imgLogo.TabIndex = 2;
-            this.imgLogo.TabStop = false;
-            this.toolTip.SetToolTip(this.imgLogo, "Open www.islog.com");
-            this.imgLogo.Click += new System.EventHandler(this.imgLogo_Click);
             // 
             // lblProductName
             // 
@@ -131,7 +120,8 @@
             // 
             // gpKeyType
             // 
-            this.gpKeyType.Controls.Add(this.lblSecureID);
+            this.gpKeyType.Controls.Add(this.gpChallengeStrategy);
+            this.gpKeyType.Controls.Add(this.rbtnOTP);
             this.gpKeyType.Controls.Add(this.linkWriteNFC);
             this.gpKeyType.Controls.Add(this.rbtnSecureID);
             this.gpKeyType.Controls.Add(this.rbtnNFC);
@@ -139,22 +129,22 @@
             this.gpKeyType.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gpKeyType.Location = new System.Drawing.Point(142, 105);
             this.gpKeyType.Name = "gpKeyType";
-            this.gpKeyType.Size = new System.Drawing.Size(336, 199);
+            this.gpKeyType.Size = new System.Drawing.Size(434, 287);
             this.gpKeyType.TabIndex = 2;
             this.gpKeyType.TabStop = false;
             this.gpKeyType.Text = "Key Type";
             // 
-            // lblSecureID
+            // rbtnOTP
             // 
-            this.lblSecureID.AutoSize = true;
-            this.lblSecureID.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblSecureID.Location = new System.Drawing.Point(78, 149);
-            this.lblSecureID.Name = "lblSecureID";
-            this.lblSecureID.Size = new System.Drawing.Size(175, 13);
-            this.lblSecureID.TabIndex = 4;
-            this.lblSecureID.Text = "Secure ID (3-way auth, SAM, HSM)";
-            this.toolTip.SetToolTip(this.lblSecureID, "Contact for more information");
-            this.lblSecureID.Click += new System.EventHandler(this.lblSecureID_Click);
+            this.rbtnOTP.AutoSize = true;
+            this.rbtnOTP.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.rbtnOTP.Location = new System.Drawing.Point(63, 186);
+            this.rbtnOTP.Name = "rbtnOTP";
+            this.rbtnOTP.Size = new System.Drawing.Size(47, 17);
+            this.rbtnOTP.TabIndex = 4;
+            this.rbtnOTP.Text = "OTP";
+            this.rbtnOTP.UseVisualStyleBackColor = true;
+            this.rbtnOTP.CheckedChanged += new System.EventHandler(this.rbtnOTP_CheckedChanged);
             // 
             // linkWriteNFC
             // 
@@ -177,8 +167,9 @@
             this.rbtnSecureID.Enabled = false;
             this.rbtnSecureID.Location = new System.Drawing.Point(63, 149);
             this.rbtnSecureID.Name = "rbtnSecureID";
-            this.rbtnSecureID.Size = new System.Drawing.Size(14, 13);
+            this.rbtnSecureID.Size = new System.Drawing.Size(193, 17);
             this.rbtnSecureID.TabIndex = 2;
+            this.rbtnSecureID.Text = "Secure ID (3-way auth, SAM, HSM)";
             this.rbtnSecureID.UseVisualStyleBackColor = true;
             // 
             // rbtnNFC
@@ -217,10 +208,37 @@
             this.gpReaderConfig.Dock = System.Windows.Forms.DockStyle.Top;
             this.gpReaderConfig.Location = new System.Drawing.Point(142, 0);
             this.gpReaderConfig.Name = "gpReaderConfig";
-            this.gpReaderConfig.Size = new System.Drawing.Size(336, 105);
+            this.gpReaderConfig.Size = new System.Drawing.Size(434, 105);
             this.gpReaderConfig.TabIndex = 3;
             this.gpReaderConfig.TabStop = false;
             this.gpReaderConfig.Text = "Reader Configuration";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(259, 76);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(52, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "(Optional)";
+            // 
+            // cbCardType
+            // 
+            this.cbCardType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCardType.FormattingEnabled = true;
+            this.cbCardType.Location = new System.Drawing.Point(99, 73);
+            this.cbCardType.Name = "cbCardType";
+            this.cbCardType.Size = new System.Drawing.Size(154, 21);
+            this.cbCardType.TabIndex = 6;
+            // 
+            // lblCardType
+            // 
+            this.lblCardType.AutoSize = true;
+            this.lblCardType.Location = new System.Drawing.Point(6, 76);
+            this.lblCardType.Name = "lblCardType";
+            this.lblCardType.Size = new System.Drawing.Size(89, 13);
+            this.lblCardType.TabIndex = 5;
+            this.lblCardType.Text = "Force Card Type:";
             // 
             // linkRefreshRU
             // 
@@ -273,32 +291,65 @@
             this.lblReaderProvider.TabIndex = 0;
             this.lblReaderProvider.Text = "Reader Provider:";
             // 
-            // cbCardType
+            // gpChallengeStrategy
             // 
-            this.cbCardType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCardType.FormattingEnabled = true;
-            this.cbCardType.Location = new System.Drawing.Point(99, 73);
-            this.cbCardType.Name = "cbCardType";
-            this.cbCardType.Size = new System.Drawing.Size(154, 21);
-            this.cbCardType.TabIndex = 6;
+            this.gpChallengeStrategy.Controls.Add(this.linkQueryChallenge);
+            this.gpChallengeStrategy.Controls.Add(this.tbxChallenge);
+            this.gpChallengeStrategy.Controls.Add(this.rbtnChallengeFixed);
+            this.gpChallengeStrategy.Controls.Add(this.rbtnChallengeBlank);
+            this.gpChallengeStrategy.Enabled = false;
+            this.gpChallengeStrategy.Location = new System.Drawing.Point(116, 186);
+            this.gpChallengeStrategy.Name = "gpChallengeStrategy";
+            this.gpChallengeStrategy.Size = new System.Drawing.Size(312, 95);
+            this.gpChallengeStrategy.TabIndex = 5;
+            this.gpChallengeStrategy.TabStop = false;
+            this.gpChallengeStrategy.Text = "Challenge Strategy";
             // 
-            // lblCardType
+            // rbtnChallengeBlank
             // 
-            this.lblCardType.AutoSize = true;
-            this.lblCardType.Location = new System.Drawing.Point(6, 76);
-            this.lblCardType.Name = "lblCardType";
-            this.lblCardType.Size = new System.Drawing.Size(89, 13);
-            this.lblCardType.TabIndex = 5;
-            this.lblCardType.Text = "Force Card Type:";
+            this.rbtnChallengeBlank.AutoSize = true;
+            this.rbtnChallengeBlank.Checked = true;
+            this.rbtnChallengeBlank.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.rbtnChallengeBlank.Location = new System.Drawing.Point(15, 19);
+            this.rbtnChallengeBlank.Name = "rbtnChallengeBlank";
+            this.rbtnChallengeBlank.Size = new System.Drawing.Size(173, 17);
+            this.rbtnChallengeBlank.TabIndex = 5;
+            this.rbtnChallengeBlank.TabStop = true;
+            this.rbtnChallengeBlank.Text = "Get a new Challenge each time";
+            this.rbtnChallengeBlank.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // rbtnChallengeFixed
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(259, 76);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(52, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "(Optional)";
+            this.rbtnChallengeFixed.AutoSize = true;
+            this.rbtnChallengeFixed.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.rbtnChallengeFixed.Location = new System.Drawing.Point(15, 42);
+            this.rbtnChallengeFixed.Name = "rbtnChallengeFixed";
+            this.rbtnChallengeFixed.Size = new System.Drawing.Size(100, 17);
+            this.rbtnChallengeFixed.TabIndex = 6;
+            this.rbtnChallengeFixed.Text = "Fixed Challenge";
+            this.rbtnChallengeFixed.UseVisualStyleBackColor = true;
+            this.rbtnChallengeFixed.CheckedChanged += new System.EventHandler(this.rbtnChallengeFixed_CheckedChanged);
+            // 
+            // tbxChallenge
+            // 
+            this.tbxChallenge.Location = new System.Drawing.Point(15, 69);
+            this.tbxChallenge.Name = "tbxChallenge";
+            this.tbxChallenge.Size = new System.Drawing.Size(246, 20);
+            this.tbxChallenge.TabIndex = 7;
+            // 
+            // linkQueryChallenge
+            // 
+            this.linkQueryChallenge.AutoSize = true;
+            this.linkQueryChallenge.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.linkQueryChallenge.Enabled = false;
+            this.linkQueryChallenge.Location = new System.Drawing.Point(267, 72);
+            this.linkQueryChallenge.Name = "linkQueryChallenge";
+            this.linkQueryChallenge.Size = new System.Drawing.Size(35, 13);
+            this.linkQueryChallenge.TabIndex = 8;
+            this.linkQueryChallenge.TabStop = true;
+            this.linkQueryChallenge.Text = "Query";
+            this.toolTip.SetToolTip(this.linkQueryChallenge, "Write password to a NFC Tag");
+            this.linkQueryChallenge.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkQueryChallenge_LinkClicked);
             // 
             // OptionsForm
             // 
@@ -306,7 +357,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(478, 334);
+            this.ClientSize = new System.Drawing.Size(576, 422);
             this.Controls.Add(this.gpKeyType);
             this.Controls.Add(this.gpReaderConfig);
             this.Controls.Add(this.panelBottom);
@@ -319,11 +370,12 @@
             this.panelBottom.ResumeLayout(false);
             this.panelLeft.ResumeLayout(false);
             this.panelLeft.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.imgLogo)).EndInit();
             this.gpKeyType.ResumeLayout(false);
             this.gpKeyType.PerformLayout();
             this.gpReaderConfig.ResumeLayout(false);
             this.gpReaderConfig.PerformLayout();
+            this.gpChallengeStrategy.ResumeLayout(false);
+            this.gpChallengeStrategy.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -334,7 +386,6 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Panel panelLeft;
-        private System.Windows.Forms.PictureBox imgLogo;
         private System.Windows.Forms.Label lblProductName;
         private System.Windows.Forms.GroupBox gpKeyType;
         private System.Windows.Forms.GroupBox gpReaderConfig;
@@ -348,9 +399,14 @@
         private System.Windows.Forms.RadioButton rbtnSecureID;
         private System.Windows.Forms.LinkLabel linkWriteNFC;
         private System.Windows.Forms.ToolTip toolTip;
-        private System.Windows.Forms.Label lblSecureID;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbCardType;
         private System.Windows.Forms.Label lblCardType;
+        private System.Windows.Forms.RadioButton rbtnOTP;
+        private System.Windows.Forms.GroupBox gpChallengeStrategy;
+        private System.Windows.Forms.LinkLabel linkQueryChallenge;
+        private System.Windows.Forms.TextBox tbxChallenge;
+        private System.Windows.Forms.RadioButton rbtnChallengeFixed;
+        private System.Windows.Forms.RadioButton rbtnChallengeBlank;
     }
 }

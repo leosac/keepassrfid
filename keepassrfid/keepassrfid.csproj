@@ -33,13 +33,13 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LibLogicalAccessNetCE, Version=2.4.0.0, Culture=neutral, PublicKeyToken=0090401ae095f62, processorArchitecture=MSIL">
+      <HintPath>packages\LibLogicalAccessNetCE.2.4.0\lib\netstandard2.0\LibLogicalAccessNetCE.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="KeePass">
       <HintPath>C:\Program Files\KeePass Password Safe 2\KeePass.exe</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="LibLogicalAccessNet, Version=2.4.0.0, Culture=neutral, PublicKeyToken=7a82f2d3e51d7690, processorArchitecture=MSIL">
-      <HintPath>packages\LibLogicalAccessNet.2.4.0-RC1\lib\netstandard2.0\LibLogicalAccessNet.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="netstandard">
       <Private>False</Private>
@@ -79,8 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\liblogicalaccess_logo_x32.png" />
   </ItemGroup>
   <ItemGroup>

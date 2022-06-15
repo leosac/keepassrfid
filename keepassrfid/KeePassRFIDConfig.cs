@@ -11,7 +11,9 @@ namespace KeePassRFID
     public enum KeyType
     {
         CSN,
-        NFC
+        NFC,
+        SecureID,
+        OTP
     }
 
     [Serializable]
@@ -23,6 +25,7 @@ namespace KeePassRFID
             ReaderUnit = String.Empty;
             CardType = String.Empty;
             KeyType = KeyType.CSN;
+            Challenge = null;
         }
 
         public string ReaderProvider { get; set; }
@@ -33,9 +36,11 @@ namespace KeePassRFID
 
         public KeyType KeyType { get; set; }
 
+        public byte[] Challenge { get; set; }
+
         private static string GetCurrentSessionConfigPath(bool createDir = false)
         {
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ISLOG");
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Leosac");
             if (createDir && !Directory.Exists(path))
                 Directory.CreateDirectory(path);
 

@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("KeePassRFID")]
 [assembly: AssemblyDescription("KeePass RFID/NFC Plugin")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("HID Global")]
+[assembly: AssemblyCompany("Leosac")]
 [assembly: AssemblyProduct("KeePass Plugin")]
-[assembly: AssemblyCopyright("Copyright © HID Global 2022")]
+[assembly: AssemblyCopyright("Copyright © Leosac 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

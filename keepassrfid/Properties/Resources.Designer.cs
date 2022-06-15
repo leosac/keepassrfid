@@ -116,16 +116,6 @@ namespace KeePassRFID.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap logo {
-            get {
-                object obj = ResourceManager.GetObject("logo", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to NFC Tag written..
         /// </summary>
         internal static string NFCTagWritten {
@@ -149,6 +139,15 @@ namespace KeePassRFID.Properties {
         internal static string NoChipError {
             get {
                 return ResourceManager.GetString("NoChipError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Challenge/Response is unsupported by this chip..
+        /// </summary>
+        internal static string OTPUnsupported {
+            get {
+                return ResourceManager.GetString("OTPUnsupported", resourceCulture);
             }
         }
         
