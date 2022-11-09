@@ -1,4 +1,4 @@
-# KeePassRFID
+# KeePassRFID [![Build Status](https://github.com/leosac/keepassrfid/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/leosac/keepassrfid/actions/workflows/build.yml)
 KeePass 2.x RFID / NFC plugin to use your contactless card as a new key provider.
 
 ## Features
